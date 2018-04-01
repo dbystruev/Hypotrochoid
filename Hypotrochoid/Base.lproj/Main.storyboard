@@ -64,7 +64,7 @@
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="-2" minValue="-4" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="m7h-A9-riu">
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="-0.5" minValue="-3" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="m7h-A9-riu">
                                                 <rect key="frame" x="-2" y="128.5" width="292" height="43.5"/>
                                                 <connections>
                                                     <action selector="topSliderMoved:" destination="BYZ-38-t0r" eventType="valueChanged" id="vtf-iV-wrh"/>

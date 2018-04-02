@@ -18,16 +18,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var bottomSlider: UISlider!
     @IBOutlet weak var imageView: UIImageView!
     
-    @IBAction func topSliderMoved(_ sender: UISlider) {
-        updateView()
-    }
-    
-    @IBAction func bottomSliderMoved(_ sender: UISlider) {
+    @IBAction func sliderMoved(_ sender: UISlider) {
         updateView()
     }
     
     let numberOfPoints = 250
-    let outerRadius: Float = 100
+    let outerRadius: CGFloat = 100
 
     // Greatest Common Divisor
     // The greatest common divisor (or Greatest Common Factor) of two numbers a and b is the largest positive integer that divides both a and b without a remainder
@@ -53,11 +49,10 @@ class ViewController: UIViewController {
     }
     
     func updateView() {
-        let innerRadius = ceil(exp(topSlider.value) * outerRadius)
-        let distance = ceil(exp(bottomSlider.value) * innerRadius)
+        let innerRadius = ceil(CGFloat(exp(topSlider.value)) * outerRadius)
+        let distance = ceil(CGFloat(exp(bottomSlider.value)) * innerRadius)
 
         let commonMultiple = lcm(Int(outerRadius), Int(innerRadius))
-        
         
         let numberOfRotations = max(
             commonMultiple / Int(outerRadius),
@@ -65,31 +60,31 @@ class ViewController: UIViewController {
         )
         
         let deltaR = outerRadius - innerRadius
-        let segment = Float(numberOfRotations) * 2 * Float.pi / Float(numberOfPoints)
+        let segment = CGFloat(numberOfRotations) * 2 * CGFloat.pi / CGFloat(numberOfPoints)
         
-        var x: Float = deltaR + distance
-        var y: Float = 0.0
+        var x: CGFloat = deltaR + distance
+        var y: CGFloat = 0.0
         
         let size = CGSize(width: 1024, height: 1024)
         let renderer = UIGraphicsImageRenderer(size: size)
         
         let image = renderer.image { context in
             let maxXY = abs(deltaR) + abs(distance)
-            let scale = CGFloat(500 / maxXY)
+            let scale = 500 / maxXY
 
             context.cgContext.translateBy(x: 512, y: 512)
             context.cgContext.scaleBy(x: scale, y: scale)
-            context.cgContext.move(to: CGPoint(x: Double(x), y: Double(y)))
+            context.cgContext.move(to: CGPoint(x: x, y: y))
             context.cgContext.setLineWidth(5 / scale)
 
             for i in 1 ... numberOfPoints {
-                let theta = Float(i) * segment
+                let theta = CGFloat(i) * segment
                 let phi = deltaR * theta / innerRadius
                 
                 x = deltaR * cos(theta) + distance * cos(phi)
                 y = deltaR * sin(theta) - distance * sin(phi)
                 
-                let point = CGPoint(x: Double(x), y: Double(y))
+                let point = CGPoint(x: x, y: y)
                 context.cgContext.addLine(to: point)
             }
             
